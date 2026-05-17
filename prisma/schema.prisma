@@ -1,0 +1,193 @@
+// ============================================================
+// CochaRecicla — Schema SIMPLIFICADO para hackathon
+// Foco: Login + Mapa + QR + Servicios
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum TipoContenedor {
+  ORGANICO
+  RECICLABLE
+  GENERAL
+  VIDRIO
+  PELIGROSO
+}
+
+enum EstadoContenedor {
+  VACIO
+  MEDIO
+  LLENO
+}
+
+enum EstadoCamion {
+  EN_RUTA
+  DISPONIBLE
+  MANTENIMIENTO
+}
+
+enum TipoResiduo {
+  ORGANICO
+  PLASTICO
+  VIDRIO
+  PAPEL
+  METAL
+  PELIGROSO
+  OTRO
+}
+
+// ─────────────────────────────────────────────
+// USUARIOS
+// ─────────────────────────────────────────────
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  nombre       String
+  email        String   @unique
+  passwordHash String
+  creadoEn     DateTime @default(now())
+
+  @@map("usuarios")
+}
+
+// ─────────────────────────────────────────────
+// CONTENEDORES
+// ─────────────────────────────────────────────
+
+model Contenedor {
+  id            Int                 @id @default(autoincrement())
+  nombre        String
+  tipo          TipoContenedor
+  estado        EstadoContenedor    @default(VACIO)
+  nivelLlenado  Int                 @default(0)
+  lat           Float
+  lng           Float
+  direccion     String?
+  esSoterrado   Boolean             @default(false)
+  qrCode        String?             @unique
+  activo        Boolean             @default(true)
+  ultimaLectura DateTime?
+
+  @@map("contenedores")
+}
+
+// ─────────────────────────────────────────────
+// PUNTOS DE RECICLAJE
+// ─────────────────────────────────────────────
+
+model PuntoReciclaje {
+  id              Int            @id @default(autoincrement())
+  nombre          String
+  lat             Float
+  lng             Float
+  direccion       String?
+  horario         String?
+  telefono        String?
+  tiposAceptados  TipoResiduo[]
+  activo          Boolean        @default(true)
+
+  @@map("puntos_reciclaje")
+}
+
+// ─────────────────────────────────────────────
+// CAMIONES
+// ─────────────────────────────────────────────
+
+model Camion {
+  id         Int           @id @default(autoincrement())
+  placa      String        @unique
+  nombre     String?
+  estado     EstadoCamion  @default(DISPONIBLE)
+  latActual  Float?
+  lngActual  Float?
+  conductor  String?
+  activo     Boolean       @default(true)
+
+  rutas RutaCamion[]
+
+  @@map("camiones")
+}
+
+// ─────────────────────────────────────────────
+// RUTAS DE CAMIÓN
+// ─────────────────────────────────────────────
+
+model RutaCamion {
+  id          Int      @id @default(autoincrement())
+  camionId    Int
+  descripcion String?
+  puntoInicio String?
+  puntoFin    String?
+  horaInicio  String?
+  horaFin     String?
+  dias        String?
+  activa      Boolean  @default(true)
+
+  camion  Camion       @relation(fields: [camionId], references: [id])
+  paradas ParadaRuta[]
+
+  @@map("rutas_camion")
+}
+
+// ─────────────────────────────────────────────
+// PARADAS DE RUTA
+// ─────────────────────────────────────────────
+
+model ParadaRuta {
+  id            Int    @id @default(autoincrement())
+  rutaId        Int
+  orden         Int
+  nombre        String
+  lat           Float
+  lng           Float
+  horaEstimada  String?
+
+  ruta RutaCamion @relation(fields: [rutaId], references: [id])
+
+  @@map("paradas_ruta")
+}
+
+// ─────────────────────────────────────────────
+// CATEGORÍAS DE SERVICIO
+// ─────────────────────────────────────────────
+
+model CategoriaServicio {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  icono  String?
+  color  String?
+  orden  Int    @default(0)
+
+  empresas Empresa[]
+
+  @@map("categorias_servicio")
+}
+
+// ─────────────────────────────────────────────
+// EMPRESAS
+// ─────────────────────────────────────────────
+
+model Empresa {
+  id           Int     @id @default(autoincrement())
+  nombre       String
+  descripcion  String?
+  url          String?
+  categoriaId  Int
+  activo       Boolean @default(true)
+
+  categoria CategoriaServicio @relation(fields: [categoriaId], references: [id])
+
+  @@map("empresas")
+}
