@@ -24,7 +24,7 @@ export function Header() {
           className="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity"
         >
           <Leaf className="w-6 h-6" />
-          <span className="font-bold text-lg">EcoCity</span>
+          <span className="font-bold text-lg">QOPA</span>
         </div>
         {showUserIcon && (
           <Link

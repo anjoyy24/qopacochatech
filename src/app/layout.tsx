@@ -5,7 +5,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'EcoCity - Gestión de Residuos',
+  title: 'QOPA - Gestión de Residuos',
   description: 'Aplicación móvil para gestión inteligente de residuos y reciclaje urbano',
 };
 

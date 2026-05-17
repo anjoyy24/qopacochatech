@@ -1,4 +1,4 @@
-# 🌍 EcoCity - Gestión de Residuos
+# 🌍 QOPA - Gestión de Residuos
 
 ## ✅ Implementado
 
