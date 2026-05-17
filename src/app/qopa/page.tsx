@@ -67,10 +67,7 @@ export default function QOPA() {
               <Suspense fallback={<div className="h-64 bg-gray-200 flex items-center justify-center">Cargando cámara...</div>}>
                 <QrReader
                   onResult={handleScan}
-                  onError={(error) => console.log('QR Error:', error)}
                   constraints={{ facingMode: 'environment' }}
-                  containerStyle={{ width: '100%' }}
-                  videoStyle={{ width: '100%', height: 'auto' }}
                 />
               </Suspense>
               <button
