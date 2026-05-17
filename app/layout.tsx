@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { Header } from '../src/app/components/Header';
+import { BottomNav } from '../src/app/components/BottomNav';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -13,8 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className="bg-gray-50">
+        <Header />
+        <main className="pt-28 pb-20 max-w-md mx-auto">
+          {children}
+        </main>
+        <BottomNav />
+      </body>
     </html>
   );
 }
+
 
