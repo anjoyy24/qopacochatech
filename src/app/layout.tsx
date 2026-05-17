@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { Header } from '../src/app/components/Header';
-import { BottomNav } from '../src/app/components/BottomNav';
-import { AuthProvider } from '../src/context/AuthContext';
+import { Header } from './components/Header';
+import { BottomNav } from './components/BottomNav';
+import { AuthProvider } from '@/context/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -28,6 +28,4 @@ export default function RootLayout({
     </html>
   );
 }
-
-
 
