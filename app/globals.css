@@ -1,4 +1,12 @@
-/* app/globals.css */
-@import './fonts.css';
-@import './tailwind.css';
-@import './theme.css';
+@import 'tailwindcss';
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+  }
+
+  h1, h2, h3 {
+    @apply font-semibold;
+  }
+}
+
