@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+/* Variables CSS personalizadas para la app */
+:root {
+  /* Colores principales ecológicos */
+  --color-emerald-600: #059669;
+  --color-emerald-500: #10b981;
+  --color-teal-500: #14b8a6;
+  --color-teal-400: #2dd4bf;
+  --color-green-50: #f0fdf4;
+}
+
+@layer base {
+  /* Estilos base para mejor UX mobile */
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased;
+  }
+
+  /* Tipografía */
+  h1 {
+    @apply text-2xl font-bold;
+  }
+
+  h2 {
+    @apply text-xl font-semibold;
+  }
+
+  h3 {
+    @apply text-lg font-semibold;
+  }
+
+  /* Scrollbar personalizado */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-emerald-500 rounded-full;
+  }
+}
+
+@layer components {
+  /* Tarjetas base */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-4;
+  }
+
+  .card-lg {
+    @apply bg-white rounded-2xl shadow-md border border-gray-100 p-6;
+  }
+
+  /* Botones */
+  .btn-primary {
+    @apply px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-gray-100 text-gray-900 rounded-lg font-medium hover:bg-gray-200 transition-colors;
+  }
+
+  /* Badges/Chips */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium;
+  }
+
+  /* Contenedores */
+  .container-mobile {
+    @apply w-full max-w-md mx-auto;
+  }
+
+  /* Estados de interacción */
+  .interactive {
+    @apply cursor-pointer transition-transform active:scale-95;
+  }
+}
+
+@layer utilities {
+  /* Espaciado mobile-first */
+  .safe-area {
+    @apply max-w-md mx-auto;
+  }
+
+  /* Gradientes personalizados */
+  .gradient-eco {
+    @apply bg-gradient-to-r from-emerald-500 to-teal-500;
+  }
+}

@@ -1,10 +1,10 @@
-'use client'; // Necesario por el hook useRouter
+'use client';
 
 import { QrCode, CreditCard } from 'lucide-react';
-import { useRouter } from 'next/navigation'; // 👈 cambio clave
+import { useRouter } from 'next/navigation';
 
 export default function Reciclaje() {
-  const router = useRouter(); // 👈 en lugar de useNavigate
+  const router = useRouter();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pt-24 pb-20 px-4">
@@ -20,7 +20,7 @@ export default function Reciclaje() {
 
         <div className="space-y-4">
           <button
-            onClick={() => router.push('/qopa')} // 👈 router.push
+            onClick={() => router.push('/qopa')}
             className="w-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8"
           >
             <div className="flex flex-col items-center gap-4">
@@ -34,7 +34,10 @@ export default function Reciclaje() {
             </div>
           </button>
 
-          <button className="w-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8">
+          <button
+            onClick={() => alert('Próximamente: Pasarela de pagos')}
+            className="w-full bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all p-8"
+          >
             <div className="flex flex-col items-center gap-4">
               <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex items-center justify-center">
                 <CreditCard className="w-10 h-10 text-white" />
