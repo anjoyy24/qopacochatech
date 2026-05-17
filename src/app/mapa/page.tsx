@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import { Trash2, Recycle, Truck, X, Clock, MapPin, Navigation } from 'lucide-react';
+import { Trash2, Recycle, Truck, X, Clock, MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const MapContainer = dynamic(() => import('react-leaflet').then(m => m.MapContainer), { ssr: false });
@@ -51,38 +51,6 @@ export default function MapView() {
   };
 
   const filteredMarkers = mockMarkers.filter(marker => activeFilters.includes(marker.type));
-
-  const getMarkerColor = (type: FilterType, status?: string) => {
-    if (type === 'contenedores') {
-      return status === 'disponible' ? '#10b981' : '#ef4444';
-    }
-    if (type === 'reciclaje') return '#3b82f6';
-    return '#a855f7';
-  };
-
-  const getMarkerIcon = (marker: MapMarker) => {
-    if (!mounted) return null;
-
-    const color = getMarkerColor(marker.type, marker.status);
-
-    return (
-      `<div style="
-        background-color: ${color};
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        border: 2px solid white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      ">
-        ${marker.type === 'contenedores' ? '🗑️' : marker.type === 'reciclaje' ? '♻️' : '🚛'}
-      </div>`
-    );
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 pt-24 pb-20">
