@@ -1,5 +1,7 @@
 'use client';
 
+'use client';
+
 import { User, Mail, Award, Settings, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
