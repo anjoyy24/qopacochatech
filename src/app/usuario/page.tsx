@@ -1,8 +1,40 @@
-'use client'; // Necesario porque el componente es interactivo (aunque no tenga hooks aún)
+'use client';
 
 import { User, Mail, Award, Settings, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
+import { clearTokenFromLocalStorage } from '@/lib/auth';
 
 export default function Usuario() {
+  const router = useRouter();
+  const { user, setUser } = useAuth();
+
+  const handleLogout = () => {
+    clearTokenFromLocalStorage();
+    setUser(null);
+    router.push('/login');
+  };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white pt-24 pb-20 px-4 flex items-center justify-center">
+        <div className="text-center max-w-md">
+          <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <LogOut className="w-10 h-10 text-emerald-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">No Autenticado</h1>
+          <p className="text-gray-600 mb-6">Debes iniciar sesión para ver tu perfil</p>
+          <button
+            onClick={() => router.push('/login')}
+            className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all"
+          >
+            Ir a Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-white pt-24 pb-20 px-4">
       <div className="max-w-md mx-auto">
@@ -12,10 +44,10 @@ export default function Usuario() {
               <User className="w-12 h-12 text-white" />
             </div>
 
-            <h2 className="text-xl font-bold text-gray-800 mb-1">USER3283278</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-1">{user.nombre}</h2>
             <div className="flex items-center gap-2 text-gray-600 mb-4">
               <Mail className="w-4 h-4" />
-              <span className="text-sm">user382@gmail.com</span>
+              <span className="text-sm">{user.email}</span>
             </div>
 
             <div className="w-full bg-gradient-to-r from-amber-100 to-yellow-100 rounded-xl p-6 text-center border-2 border-amber-300">
@@ -79,7 +111,10 @@ export default function Usuario() {
             <span className="font-medium text-gray-800">Configuración</span>
           </button>
 
-          <button className="w-full bg-white rounded-xl shadow-md p-4 flex items-center gap-3 hover:shadow-lg transition-shadow text-red-600">
+          <button
+            onClick={handleLogout}
+            className="w-full bg-white rounded-xl shadow-md p-4 flex items-center gap-3 hover:shadow-lg transition-shadow text-red-600"
+          >
             <LogOut className="w-5 h-5" />
             <span className="font-medium">Cerrar Sesión</span>
           </button>

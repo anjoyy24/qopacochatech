@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
+import { AuthProvider } from '@/context/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -16,12 +17,15 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="bg-gray-50">
-        <Header />
-        <main className="pt-28 pb-20 max-w-md mx-auto">
-          {children}
-        </main>
-        <BottomNav />
+        <AuthProvider>
+          <Header />
+          <main className="pt-28 pb-20 max-w-md mx-auto">
+            {children}
+          </main>
+          <BottomNav />
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
